@@ -1,17 +1,45 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+
+const people = [
+  // "Dreamy",
+  // "Alexa",
+  // "Lish",
+  // "Ducky",
+  // "Troll",
+];
+
+function App() {
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const [searchResults, setSearchResults] = React.useState([]);
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+  React.useEffect(() => {
+    const results = people.filter((person) =>
+      person.toLowerCase().includes(searchTerm)
+    );
+    setSearchResults(results);
+  }, [searchTerm]);
+
+  return (
+    <div className="App">
+      <input
+        type="text"
+        placeholder="Search"
+        value={searchTerm}
+        onChange={handleChange}
+      />
+      <ul>
+        {searchResults.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
